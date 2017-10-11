@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- 给回车键绑定事件怎么做？ -->
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.box{
+			width: 800px;
+			height: 700px;
+			border: 1px solid #ddd;
+			margin: 0 auto;
+		}
+		.container{
+			width: 100%;
+			height: 650px;
+		}
+		.bot{
+			width: 100%;
+			height: 50px;
+			line-height: 50px;
+		}
+		input{
+			margin-left: 3px;
+			width: 89%;
+		}
+		button{
+			width: 9%;
+		}
+		.my{
+			height: 50px;
+			line-height: 50px;
+			background: green;
+		}
+		.other{
+			height: 50px;
+			line-height: 50px;
+			background: pink;
+			text-align: right;
+		}
+	</style>
+	<script src="js/ajax_tool.js"></script>
+</head>
+<body>
+	<div class="box">
+		<div class="container">
+			
+		</div>
+		<div class="bot">
+			<input type="text">
+			<button id="btnSend">发送</button>
+		</div>
+	</div>
+
+	<script>
+		document.getElementById("btnSend").onclick=function(){
+			var input=document.getElementsByTagName("input")[0];
+			console.log(input);
+			var myDiv=document.createElement("div");
+			myDiv.innerHTML=input.value;
+			myDiv.classList.add("my");
+			document.querySelector(".container").appendChild(myDiv);
+
+			ajax_tool_pro({
+				url:"chat.php",
+				data:"message="+input.value,
+				method:"get",
+				success:function(data){
+					console.log(data);
+					var otherDiv=document.createElement("div");
+					otherDiv.innerHTML=data;
+					otherDiv.classList.add("other");
+					document.querySelector(".container").appendChild(otherDiv);
+				}
+			});
+		}
+	</script>
+</body>
+</html>
